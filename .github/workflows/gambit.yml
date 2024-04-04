@@ -64,5 +64,4 @@ jobs:
           file: devcontainer.Dockerfile
           push: ${{ inputs.push }}
           tags: |
-            ${{ env.TAG_PREFIX }}:${{ inputs.version }}
-            ${{ env.TAG_PREFIX }}:latest
+            ${{ env.TAG_PREFIX }}-devcontainer:${{ inputs.version }}
