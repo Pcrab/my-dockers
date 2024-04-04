@@ -1,0 +1,57 @@
+name: Create Gambit Scheme Docker Image
+
+on:
+  workflow_dispatch:
+    inputs:
+      push:
+        description: "Push image to registry"
+        required: true
+        type: boolean
+      version:
+        description: "Image version"
+        required: true
+        type: string
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: gambit
+  TAG_PREFIX: ghcr.io/pcrab/gambit
+
+jobs:
+  build-and-push-image:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      -
+        name: Login to Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      -
+        name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: "{{defaultContext}}:gambit"
+          push: true
+          tags: |
+            ${{ env.TAG_PREFIX }}:${{ inputs.version }}
+            ${{ env.TAG_PREFIX }}:latest
+          labels: |
+            org.opencontainers.image.title=Gambit Scheme
+            org.opencontainers.image.description=Custom Docker image for Gambit Scheme
+            org.opencontainers.image.url=https://github.com/Pcrab/my-dockers
+            org.opencontainers.image.source=https://github.com/Pcrab/my-dockers/tree/main/gambit
+            org.opencontainers.image.version=${{ inputs.version }}
+            org.opencontainers.image.licenses=GPL-3.0
+            org.opencontainers.image.authors=Pcrab
