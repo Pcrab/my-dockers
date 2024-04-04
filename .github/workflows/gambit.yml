@@ -47,14 +47,6 @@ jobs:
           tags: |
             ${{ env.TAG_PREFIX }}:${{ inputs.version }}
             ${{ env.TAG_PREFIX }}:latest
-          labels: |
-            org.opencontainers.image.title=Gambit Scheme
-            org.opencontainers.image.description=Custom Docker image for Gambit Scheme
-            org.opencontainers.image.url=https://github.com/Pcrab/my-dockers
-            org.opencontainers.image.source=https://github.com/Pcrab/my-dockers/tree/main/gambit/${{ inputs.version }}
-            org.opencontainers.image.version=${{ inputs.version }}
-            org.opencontainers.image.licenses=GPL-3.0
-            org.opencontainers.image.authors=Pcrab
 
       -
         name: Build and push devContainer image
