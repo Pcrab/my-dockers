@@ -55,3 +55,14 @@ jobs:
             org.opencontainers.image.version=${{ inputs.version }}
             org.opencontainers.image.licenses=GPL-3.0
             org.opencontainers.image.authors=Pcrab
+
+      -
+        name: Build and push devContainer image
+        uses: docker/build-push-action@v5
+        with:
+          context: "{{defaultContext}}:gambit/${{ inputs.version }}"
+          file: devcontainer.Dockerfile
+          push: ${{ inputs.push }}
+          tags: |
+            ${{ env.TAG_PREFIX }}:${{ inputs.version }}
+            ${{ env.TAG_PREFIX }}:latest
