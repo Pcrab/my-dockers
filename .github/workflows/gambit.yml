@@ -42,8 +42,8 @@ jobs:
         name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
-          context: "{{defaultContext}}:gambit"
-          push: true
+          context: ./gambit/${{ inputs.version }}
+          push: ${{ inputs.push }}
           tags: |
             ${{ env.TAG_PREFIX }}:${{ inputs.version }}
             ${{ env.TAG_PREFIX }}:latest
